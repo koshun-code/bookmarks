@@ -42,7 +42,7 @@ function buildBookmarks() {
     bookmarksContainer.textContent = '';
     
     bookmarks.forEach((bookmark) => {
-       const {name, url} = bookmark;
+       const {name, url, id} = bookmark;
        //Item 
        const item = document.createElement('div');
        item.classList.add('item');
@@ -50,8 +50,7 @@ function buildBookmarks() {
        const closeIcon = document.createElement('i');
        closeIcon.classList.add('fas', 'fa-times');
        closeIcon.setAttribute('title', 'Delete bookmark');
-       //closeIcon.setAttribute('onclick', `deleteBookmark('${url}')`);
-       closeIcon.setAttribute('onclick', `deleteBookmark('${url}')`);
+       closeIcon.setAttribute('onclick', `deleteBookmark('${id}')`);
        //Favicon / Link container
        const linkInfo = document.createElement('div');
        linkInfo.classList.add('name');
@@ -74,33 +73,55 @@ function buildBookmarks() {
     });
 }
 //Fetch bookmarks
-function fetchBookmarks() {
+async function  fetchBookmarks() {
     // Get bookmarks from localstorage if available
-    if (localStorage.getItem('bookmarks')) {
-        bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
-    } else {
-        bookmarks = [
-            {
-                name: 'Jasino',
-                url: 'https://jacinto.design',
-            },
-        ];
-        localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-    }
+    // if (localStorage.getItem('bookmarks')) {
+    //     bookmarks = JSON.parse(localStorage.getItem('bookmarks'));
+    // }
+    const response = await fetch("http://bookmarks/api/bookmarks");
+    bookmarks = await response.json();
+
     buildBookmarks();
 }
 
 //Delete bookmarks
-function deleteBookmark(url) {
-    bookmarks.forEach((bookmark, i) => {
-        if (bookmark.url === url) {
-           // console.log(bookmark.url === url);
-            bookmarks.splice(i, 1);
-        }
+async function deleteBookmark(id) {
+    const deleteId = Number(id);
+    const response = await fetch(`http://bookmarks/api/bookmarks/${deleteId}`, {
+        method: "delete",
+        cache: 'no-cache'
     });
-   
-    //Update bookmarks in localctorage and re-populate DOM
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+    const json = await response.json();
+    fetchBookmarks();
+}
+
+//Chech the Schema
+
+const chechUrlScheme = (url) => {
+
+    const Schema = (!url.includes('http://') && !url.includes('https://'));
+
+    return Schema ? `https//:${url}` : url;
+
+}
+
+//function send bookmark to database
+const sendBookmark = async (bookmark) => {
+    //console.log(JSON.stringify(bookmark));
+    const response = await fetch("http://bookmarks/api/bookmarks", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(bookmark)
+        /**
+         *  headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+  },
+             body: JSON.stringify(user)
+         */
+    });
+    const json = await response.json();
     fetchBookmarks();
 }
 
@@ -110,22 +131,18 @@ function storeBookmark(e) {
     const nameValues = websiteNameEl.value;
     let nameUrl = websiteUrlEl.value;
 
-    if (!nameUrl.includes('http://') && !nameUrl.includes('https://')) {
-        nameUrl = `https://${nameUrl}`;
-    }
+    nameUrl = chechUrlScheme(nameUrl);
+
     if (!validate(nameValues, nameUrl)) {
         return false;
     }
+
     const bookmark = {
         name: nameValues,
         url: nameUrl,
     };
-    bookmarks.push(bookmark);
-
-    //localstorage
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-    //console.log(localStorage.setItem('bookmarks', JSON.stringify(bookmarks)));
-    fetchBookmarks();
+    sendBookmark(bookmark);
+    //fetchBookmarks();
     bookmarkForm.reset();
     websiteNameEl.focus();
 
