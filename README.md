@@ -12,8 +12,6 @@ Automatic substitution of the title as the name of the bookmark
 4. A brief description if needed
 5. Shortened link
 
-Translated with www.DeepL.com/Translator (free version)
-
 (Russian)
 Данное приложение является MVP и выполняет функцию хранения закладок.
 Реализован самый базовый функционал по хранению закладок без аутентификазии и авторизации.
