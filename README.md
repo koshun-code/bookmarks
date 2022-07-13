@@ -11,6 +11,7 @@ Version 2 will add:
 Automatic substitution of the title as the name of the bookmark
 4. A brief description if needed
 5. Shortened link
+6. list links (categories)
 
 (Russian)
 Данное приложение является MVP и выполняет функцию хранения закладок.
@@ -22,3 +23,4 @@ Automatic substitution of the title as the name of the bookmark
 3. Автоматическая подстановка title как названия закладки
 4. Кратное описание если необходимо
 5. Сокращённая ссылка
+6. Списки ссылок(Категории)
