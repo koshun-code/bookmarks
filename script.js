@@ -12,7 +12,7 @@ let bookmarks = [];
 
 function showModal() {
     modal.classList.add('show-modal');
-    websiteNameEl.focus();
+    websiteUrlEl.focus();
 }
 
 //Event listener to show 
@@ -144,7 +144,7 @@ function storeBookmark(e) {
     sendBookmark(bookmark);
     //fetchBookmarks();
     bookmarkForm.reset();
-    websiteNameEl.focus();
+    websiteUrlEl.focus();
 
    // console.log(bookmarks);
 }

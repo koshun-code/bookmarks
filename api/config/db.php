@@ -3,7 +3,7 @@
 return [
     'driver' => 'mysql',
     'host' => 'localhost',
-    'dbname' => 'bookmarks',
+    'dbname' => 'slimbookmarks',
     'user' => 'root',
     'password' => 'root',
 ];

@@ -6,7 +6,6 @@ use Slim\Exception\HttpNotFoundException;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
-use BM\Core\BookmarkModel;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -35,46 +34,13 @@ $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
-$app->get('/api/bookmarks', function(Request $request, Response $response) {
+// $app->group('bookmakrs', function(Request $request, Response $response){
 
-    $bookmarks = new BookmarkModel();
-   // var_dump($bookmarks->getALL());
-   return $response->withJson($bookmarks->getALL());
-    //return $response;
-});
-
-$app->get('/api/bookmarks/{id}', function(Request $request, Response $response, array $args) {
-    $bookmarks = new BookmarkModel();
-    return $response->withJson($bookmarks->getOne($args['id']));
-});
+// })->addMiddleware(Auth::class);
 
 
-$app->post('/api/bookmarks', function(Request $request, Response $response) {
-    $req = $request->getParsedBody();
-    //var_dump($req);
-    //return $response->withJson($req);
-    $bookmarks = new BookmarkModel();
-    
-    $res = $bookmarks->insert($req);
+(require './../config/routes.php')($app);
 
-    if ($res) {
-        return $response->withJson("Success");
-    } else {
-        return $response->withJson("Error", 404);
-    }
-});
-
-$app->delete('/api/bookmarks/{id}', function(Request $request, Response $response, array $args) {
-    $id = $args['id'];
-    $bookmarks = new BookmarkModel();
-    $res = $bookmarks->deleteBookmark($id);
-    if ($res) {
-        return $response->withJson("Bookmark with id {$id} successfully deleted");
-    } else {
-        return $response->withJson("Error", 404);
-    }
-    
-});
 
 $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
     throw new HttpNotFoundException($request);

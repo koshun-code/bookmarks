@@ -15,15 +15,15 @@ class BookmarkModel
         $this->db = $pdo->setConnection();
     }
 
-    public function getALL()
+    public function getALL($table = 'bookmarks')
     {
-        $sth = $this->db->prepare("SELECT * FROM bookmarks");
+        $sth = $this->db->prepare("SELECT * FROM {$table}");
         $sth->execute();
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getOne($id)
+    public function getOne($id, $table = 'bookmarks')
     {
-        $sth = $this->db->prepare("SELECT * FROM bookmarks WHERE id = ?");
+        $sth = $this->db->prepare("SELECT * FROM {$table} WHERE id = ?");
         $sth->execute([$id]);
         return $sth->fetch(PDO::FETCH_ASSOC);
     }
