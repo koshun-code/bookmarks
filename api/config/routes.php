@@ -30,18 +30,31 @@ return function (App $app) {
         return $response->withJson($bookmarks->getOne($args['id']));
     });
     
-    
+    //This route need to get title from site
+    $app->post('/api/bookmarks/title/', function(Request $request, Response $response) {
+                $client = new Client();
+                $url = $request->getParsedBody();
+                //var_dump($url);
+                $crawler = $client->request('GET', $url['url']);
+                $title = $crawler->filter('title')->text();
+                //var_dump($crawler->filter('title')->text());
+
+                return $response->withJson(['title' => $title], 200);
+
+    });
+
+///////////////////////////
     $app->post('/api/bookmarks', function(Request $request, Response $response) {
         $req = $request->getParsedBody();
-        $client = new Client();
-        $crawler = $client->request('GET', $req['url']);
+        // $client = new Client();
+        // $crawler = $client->request('GET', $req['url']);
         
         
-        if (empty($req['name'])) {
+        // if (empty($req['name'])) {
 
-            $title = $crawler->filter('title')->innerText();
-            $req = ['name' => $title, ...$req];
-        }
+        //     $title = $crawler->filter('title')->innerText();
+        //     $req = ['name' => $title, ...$req];
+        // }
 
         $bookmarks = new BookmarkModel();
         //var_dump($req);

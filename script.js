@@ -12,7 +12,7 @@ let bookmarks = [];
 
 function showModal() {
     modal.classList.add('show-modal');
-    websiteUrlEl.focus();
+    websiteNameEl.focus();
 }
 
 //Event listener to show 
@@ -125,6 +125,30 @@ const sendBookmark = async (bookmark) => {
     fetchBookmarks();
 }
 
+
+websiteUrlEl.onblur = async () => {
+/**
+ *     const bookmark = {
+        name: nameValues,
+        url: nameUrl,
+    };
+ */
+
+    const send = {url: websiteUrlEl.value};
+   // console.log(send);
+    const response = await fetch("http://bookmarks/api/bookmarks/title/", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(send)
+
+    });
+    
+    const data = await response.json();
+    websiteNameEl.value = data.title;
+}
+
 //Handel data from Form
 function storeBookmark(e) {
     e.preventDefault();
@@ -144,7 +168,7 @@ function storeBookmark(e) {
     sendBookmark(bookmark);
     //fetchBookmarks();
     bookmarkForm.reset();
-    websiteUrlEl.focus();
+    websiteNameEl.focus();
 
    // console.log(bookmarks);
 }
