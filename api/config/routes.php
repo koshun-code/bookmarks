@@ -4,7 +4,7 @@ use BM\Core\BookmarkModel;
 use Slim\Http\Response as Response; 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
-
+use Goutte\Client;
 
 /**
  * Routes
@@ -33,9 +33,18 @@ return function (App $app) {
     
     $app->post('/api/bookmarks', function(Request $request, Response $response) {
         $req = $request->getParsedBody();
-        //var_dump($req);
-        //return $response->withJson($req);
+        $client = new Client();
+        $crawler = $client->request('GET', $req['url']);
+        
+        
+        if (empty($req['name'])) {
+
+            $title = $crawler->filter('title')->innerText();
+            $req = ['name' => $title, ...$req];
+        }
+
         $bookmarks = new BookmarkModel();
+        //var_dump($req);
         
         $res = $bookmarks->insert($req);
     
