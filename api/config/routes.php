@@ -34,16 +34,11 @@ return function (App $app) {
     $app->post('/api/bookmarks/title/', function(Request $request, Response $response) {
                 $client = new Client();
                 $url = $request->getParsedBody();
-                //var_dump($url);
                 $crawler = $client->request('GET', $url['url']);
                 $title = $crawler->filter('title')->text();
-                //var_dump($crawler->filter('title')->text());
-
-                return $response->withJson(['title' => $title], 200);
+                return $response->withJson(['title' => $title]);
 
     });
-
-///////////////////////////
     $app->post('/api/bookmarks', function(Request $request, Response $response) {
         $req = $request->getParsedBody();
         // $client = new Client();
