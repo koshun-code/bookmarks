@@ -1,5 +1,6 @@
 import { deleteBookmark } from "./Data";
 
+
 export function buildBookmarks(bookmarks) {
     const bookmarksContainer = document.getElementById('bookmark-container');
     //remove all bookmarks element
@@ -12,10 +13,8 @@ export function buildBookmarks(bookmarks) {
        item.classList.add('item');
        //close Icon
        const closeIcon = document.createElement('i');
-       closeIcon.classList.add('fas', 'fa-times', 'delete-bookmark');
+       closeIcon.classList.add('fas', 'fa-times', 'delete-bm');
        closeIcon.setAttribute('title', 'Delete bookmark');
-       closeIcon.setAttribute('onclick', `deleteBookmark('${id}')`);
-    //    closeIcon.setAttribute('bmid', id);
        //Favicon / Link container
        const linkInfo = document.createElement('div');
        linkInfo.classList.add('name');
@@ -34,6 +33,8 @@ export function buildBookmarks(bookmarks) {
        linkInfo.append(favicon, link);
        item.append(closeIcon, linkInfo);
        bookmarksContainer.appendChild(item);
-
+       closeIcon.addEventListener('click', () => {
+        deleteBookmark(id)
+       })
     });
 }
