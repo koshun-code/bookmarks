@@ -1,6 +1,7 @@
 <?php
 
 use BM\Core\BookmarkModel;
+use BM\Services\CheckService;
 use Slim\Http\Response as Response; 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -41,20 +42,13 @@ return function (App $app) {
     });
     $app->post('/api/bookmarks', function(Request $request, Response $response) {
         $req = $request->getParsedBody();
-        // $client = new Client();
-        // $crawler = $client->request('GET', $req['url']);
-        
-        
-        // if (empty($req['name'])) {
-
-        //     $title = $crawler->filter('title')->innerText();
-        //     $req = ['name' => $title, ...$req];
-        // }
-
+        $status = new CheckService($req['url']);
+        $statusCode = $status->checkUrl();
         $bookmarks = new BookmarkModel();
-        //var_dump($req);
+        $bookmarkInfo = $statusCode ? [...$req, 'status' => $statusCode] : [...$req, null];
+        //var_dump($bookmarkInfo);
         
-        $res = $bookmarks->insert($req);
+        $res = $bookmarks->insert($bookmarkInfo);
     
         if ($res) {
             return $response->withJson("Success");

@@ -30,7 +30,8 @@ class BookmarkModel
 
     public function insert($data, $table = 'bookmarks')
     { 
-        $sql = "INSERT INTO {$table} ( name, url) VALUES (:name, :url)";
+        //var_dump($data);
+        $sql = "INSERT INTO {$table} ( name, url, status) VALUES (:name, :url, :status)";
         $sth = $this->db->prepare($sql);
         return $sth->execute($data);
     }
