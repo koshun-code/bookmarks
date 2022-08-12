@@ -1,4 +1,4 @@
-import { buildBookmarks } from "./Build";
+import { buildBookmarks, createCategory } from "./Build";
 import { chechUrlScheme, validate } from "./Validate";
 import axios from "axios";
 
@@ -80,4 +80,23 @@ export function storeBookmark(e) {
     //fetchBookmarks();
     bookmarkForm.reset();
     websiteUrlEl.focus();
+}
+
+
+export async function giveCategory() {
+    const response = await axios.get('http://bookmarks/api/category/give');
+    const data = await response.data;
+    createCategory(data);
+}
+
+export async function sendCategory(dataCategory) {
+    const response = await axios.post('http://bookmarks/api/category/send', {
+        headers : {
+            'Content-Type': 'application/json;charset=utf-8'
+        }, 
+        category_name: dataCategory
+    });
+    // console.log(response);
+    const data = await response.data;
+    giveCategory()
 }

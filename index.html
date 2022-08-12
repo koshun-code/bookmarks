@@ -11,7 +11,40 @@
     <!--show modal-->
     <h1 id="show-modal">Добавить закладку</h1>
     <!--bookmarks-->
-    <div class="container" id="bookmark-container"></div>
+    <div class="wrapper">
+        <div class="category-list">
+            <h2 class="category_title">Категории</h2>
+            <ul id="categories">
+            </ul>
+            <div id="modal-category-show" class="add-category">
+                <a href="#" ><i class="fas fa-plus-circle"></i> Добавить категорию</a>
+            </div>   
+        </div>
+        <div class="container" id="bookmark-container"></div>
+    </div>
+
+<!--  -->
+        <!--Modal category-->
+        <div class="modal-container" id="modal-category" >
+            <div class="modal">
+                <i class="fas fa-times close-icon" id="close-modal-category"></i>
+                <div class="modal-header">
+                    <h3>Добавить Категорию</h3>
+                </div>
+                <div class="modal-content">
+                    <form id="category-form">
+                        <!--Website category-->
+                        <div class="form-group">
+                            <label for="category-site" class="form-label"> Категория</label>
+                            <input type="text" class="form-input" id="website-category">
+                        </div>
+                        <button type="submit" id="category-submit">Добавить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+<!--  -->
+
         <!--Modal-->
         <div class="modal-container" id="modal">
             <div class="modal">
@@ -31,6 +64,13 @@
                             <label for="website-name" class="form-label">Название сайта</label>
                             <input type="text" class="form-input" id="website-name">
                         </div>
+                        <div class="form-group">
+                            <select name="category" class="form-select">
+                                <option value="programming">Programming</option>
+                                <option value="Networks">Networks</option>
+                                <option value="python">python</option>
+                            </select>
+                        </div>
                         <button type="submit">Save</button>
                     </form>
                 </div>
@@ -38,6 +78,7 @@
         </div>
     </div>
     <!-- Script -->
-    <script src="script.js"></script>
+    <!-- <script src="script.js"></script> -->
+    <script src="dist/index_bundle.js"></script>
 </body>
 </html>

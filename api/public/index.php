@@ -6,6 +6,7 @@ use Slim\Exception\HttpNotFoundException;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
+use BM\Core\BookmarkModel;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -34,6 +35,7 @@ $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
 
+
 // $app->group('bookmakrs', function(Request $request, Response $response){
 
 // })->addMiddleware(Auth::class);
@@ -41,8 +43,7 @@ $app->addErrorMiddleware(true, true, true);
 
 (require './../config/routes.php')($app);
 
-
-$app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
-    throw new HttpNotFoundException($request);
-});
+// $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
+//     throw new HttpNotFoundException($request);
+// });
 $app->run();

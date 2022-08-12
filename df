@@ -1,0 +1,326 @@
+warning: LF will be replaced by CRLF in api/composer.json.
+The file will have its original line endings in your working directory
+warning: LF will be replaced by CRLF in api/composer.lock.
+The file will have its original line endings in your working directory
+[1mdiff --git a/_config.yml b/_config.yml[m
+[1mdeleted file mode 100644[m
+[1mindex c419263..0000000[m
+[1m--- a/_config.yml[m
+[1m+++ /dev/null[m
+[36m@@ -1 +0,0 @@[m
+[31m-theme: jekyll-theme-cayman[m
+\ No newline at end of file[m
+[1mdiff --git a/api/composer.json b/api/composer.json[m
+[1mindex d8eb3ab..5796278 100644[m
+[1m--- a/api/composer.json[m
+[1m+++ b/api/composer.json[m
+[36m@@ -2,11 +2,14 @@[m
+     "require": {[m
+         "slim/slim": "4.*",[m
+         "slim/psr7": "^1.5",[m
+[31m-        "slim/http": "^1.2"[m
+[32m+[m[32m        "slim/http": "^1.2",[m
+[32m+[m[32m        "fabpot/goutte": "^4.0",[m
+[32m+[m[32m        "simplehtmldom/simplehtmldom": "*"[m
+     },[m
+     "autoload": {[m
+         "psr-4": {[m
+             "BM\\": "src"[m
+         }[m
+[31m-    }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "minimum-stability": "alpha"[m
+ }[m
+[1mdiff --git a/api/composer.lock b/api/composer.lock[m
+[1mindex eb46e30..af02221 100644[m
+[1m--- a/api/composer.lock[m
+[1m+++ b/api/composer.lock[m
+[36m@@ -4,8 +4,63 @@[m
+         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",[m
+         "This file is @generated automatically"[m
+     ],[m
+[31m-    "content-hash": "3f323dd160421cece6dba01186d16cc4",[m
+[32m+[m[32m    "content-hash": "453c131b32354e38f1f5e170352c295e",[m
+     "packages": [[m
+[32m+[m[32m        {[m
+[32m+[m[32m            "name": "fabpot/goutte",[m
+[32m+[m[32m            "version": "v4.0.2",[m
+[32m+[m[32m            "source": {[m
+[32m+[m[32m                "type": "git",[m
+[32m+[m[32m                "url": "https://github.com/FriendsOfPHP/Goutte.git",[m
+[32m+[m[32m                "reference": "f51940fbe0db060bc4fc0b3f1d19bc4ff3054b17"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "dist": {[m
+[32m+[m[32m                "type": "zip",[m
+[32m+[m[32m                "url": "https://api.github.com/repos/FriendsOfPHP/Goutte/zipball/f51940fbe0db060bc4fc0b3f1d19bc4ff3054b17",[m
+[32m+[m[32m                "reference": "f51940fbe0db060bc4fc0b3f1d19bc4ff3054b17",[m
+[32m+[m[32m                "shasum": ""[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require": {[m
+[32m+[m[32m                "php": ">=7.1.3",[m
+[32m+[m[32m                "symfony/browser-kit": "^4.4|^5.0|^6.0",[m
+[32m+[m[32m                "symfony/css-selector": "^4.4|^5.0|^6.0",[m
+[32m+[m[32m                "symfony/dom-crawler": "^4.4|^5.0|^6.0",[m
+[32m+[m[32m                "symfony/http-client": "^4.4|^5.0|^6.0",[m
+[32m+[m[32m                "symfony/mime": "^4.4|^5.0|^6.0"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require-dev": {[m
+[32m+[m[32m                "symfony/phpunit-bridge": "^5.0|^6.0"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "type": "application",[m
+[32m+[m[32m            "autoload": {[m
+[32m+[m[32m                "psr-4": {[m
+[32m+[m[32m                    "Goutte\\": "Goutte"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                "exclude-from-classmap": [[m
+[32m+[m[32m                    "Goutte/Tests"[m
+[32m+[m[32m                ][m
+[32m+[m[32m            },[m
+[32m+[m[32m            "notification-url": "https://packagist.org/downloads/",[m
+[32m+[m[32m            "license": [[m
+[32m+[m[32m                "MIT"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "authors": [[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "Fabien Potencier",[m
+[32m+[m[32m                    "email": "fabien@symfony.com"[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "description": "A simple PHP Web Scraper",[m
+[32m+[m[32m            "homepage": "https://github.com/FriendsOfPHP/Goutte",[m
+[32m+[m[32m            "keywords": [[m
+[32m+[m[32m                "scraper"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "support": {[m
+[32m+[m[32m                "issues": "https://github.com/FriendsOfPHP/Goutte/issues",[m
+[32m+[m[32m                "source": "https://github.com/FriendsOfPHP/Goutte/tree/v4.0.2"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "time": "2021-12-17T17:15:01+00:00"[m
+[32m+[m[32m        },[m
+         {[m
+             "name": "fig/http-message-util",[m
+             "version": "1.1.5",[m
+[36m@@ -481,6 +536,81 @@[m
+             },[m
+             "time": "2019-03-08T08:55:37+00:00"[m
+         },[m
+[32m+[m[32m        {[m
+[32m+[m[32m            "name": "simplehtmldom/simplehtmldom",[m
+[32m+[m[32m            "version": "2.0-RC2",[m
+[32m+[m[32m            "source": {[m
+[32m+[m[32m                "type": "git",[m
+[32m+[m[32m                "url": "https://github.com/simplehtmldom/simplehtmldom.git",[m
+[32m+[m[32m                "reference": "3c87726400e59d8e1bc4709cfe82353abeb0f4d1"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "dist": {[m
+[32m+[m[32m                "type": "zip",[m
+[32m+[m[32m                "url": "https://api.github.com/repos/simplehtmldom/simplehtmldom/zipball/3c87726400e59d8e1bc4709cfe82353abeb0f4d1",[m
+[32m+[m[32m                "reference": "3c87726400e59d8e1bc4709cfe82353abeb0f4d1",[m
+[32m+[m[32m                "shasum": ""[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require": {[m
+[32m+[m[32m                "ext-iconv": "*",[m
+[32m+[m[32m                "php": ">=5.6"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require-dev": {[m
+[32m+[m[32m                "phpunit/phpunit": "^6 || ^7"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "suggest": {[m
+[32m+[m[32m                "ext-curl": "Needed to support cURL downloads in class HtmlWeb",[m
+[32m+[m[32m                "ext-mbstring": "Allows better decoding for multi-byte documents",[m
+[32m+[m[32m                "ext-openssl": "Allows loading HTTPS pages when using cURL"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "type": "library",[m
+[32m+[m[32m            "autoload": {[m
+[32m+[m[32m                "classmap": [[m
+[32m+[m[32m                    "./"[m
+[32m+[m[32m                ],[m
+[32m+[m[32m                "exclude-from-classmap": [[m
+[32m+[m[32m                    "/example/",[m
+[32m+[m[32m                    "/manual/",[m
+[32m+[m[32m                    "/testcase/",[m
+[32m+[m[32m                    "/tests/",[m
+[32m+[m[32m                    "simple_html_dom.php"[m
+[32m+[m[32m                ][m
+[32m+[m[32m            },[m
+[32m+[m[32m            "notification-url": "https://packagist.org/downloads/",[m
+[32m+[m[32m            "license": [[m
+[32m+[m[32m                "MIT"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "authors": [[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "S.C. Chen",[m
+[32m+[m[32m                    "role": "Developer"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "John Schlick",[m
+[32m+[m[32m                    "role": "Developer"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "logmanoriginal",[m
+[32m+[m[32m                    "role": "Developer"[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "description": "A fast, simple and reliable HTML document parser for PHP.",[m
+[32m+[m[32m            "homepage": "https://simplehtmldom.sourceforge.io/",[m
+[32m+[m[32m            "keywords": [[m
+[32m+[m[32m                "Simple",[m
+[32m+[m[32m                "dom",[m
+[32m+[m[32m                "html",[m
+[32m+[m[32m                "parser",[m
+[32m+[m[32m                "php",[m
+[32m+[m[32m                "simplehtmldom"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "support": {[m
+[32m+[m[32m                "issues": "https://sourceforge.net/p/simplehtmldom/bugs/",[m
+[32m+[m[32m                "rss": "https://sourceforge.net/p/simplehtmldom/news/feed.rss",[m
+[32m+[m[32m                "source": "https://sourceforge.net/p/simplehtmldom/repository/",[m
+[32m+[m[32m                "wiki": "https://simplehtmldom.sourceforge.io/docs/"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "time": "2019-11-09T15:42:50+00:00"[m
+[32m+[m[32m        },[m
+         {[m
+             "name": "slim/http",[m
+             "version": "1.2.0",[m
+[36m@@ -756,17 +886,155 @@[m
+             "time": "2022-03-14T14:18:23+00:00"[m
+         },[m
+         {[m
+[31m-            "name": "symfony/polyfill-php80",[m
+[31m-            "version": "v1.26.0",[m
+[32m+[m[32m            "name": "symfony/browser-kit",[m
+[32m+[m[32m            "version": "v5.4.11",[m
+             "source": {[m
+                 "type": "git",[m
+[31m-                "url": "https://github.com/symfony/polyfill-php80.git",[m
+[31m-                "reference": "cfa0ae98841b9e461207c13ab093d76b0fa7bace"[m
+[32m+[m[32m                "url": "https://github.com/symfony/browser-kit.git",[m
+[32m+[m[32m                "reference": "081fe28a26b6bd671dea85ef3a4b5003f3c88027"[m
+             },[m
+             "dist": {[m
+                 "type": "zip",[m
+[31m-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/cfa0ae98841b9e461207c13ab093d76b0fa7bace",[m
+[31m-                "reference": "cfa0ae98841b9e461207c13ab093d76b0fa7bace",[m
+[32m+[m[32m                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/081fe28a26b6bd671dea85ef3a4b5003f3c88027",[m
+[32m+[m[32m                "reference": "081fe28a26b6bd671dea85ef3a4b5003f3c88027",[m
+[32m+[m[32m                "shasum": ""[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require": {[m
+[32m+[m[32m                "php": ">=7.2.5",[m
+[32m+[m[32m                "symfony/dom-crawler": "^4.4|^5.0|^6.0",[m
+[32m+[m[32m                "symfony/polyfill-php80": "^1.16"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require-dev": {[m
+[32m+[m[32m                "symfony/css-selector": "^4.4|^5.0|^6.0",[m
+[32m+[m[32m                "symfony/http-client": "^4.4|^5.0|^6.0",[m
+[32m+[m[32m                "symfony/mime": "^4.4|^5.0|^6.0",[m
+[32m+[m[32m                "symfony/process": "^4.4|^5.0|^6.0"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "suggest": {[m
+[32m+[m[32m                "symfony/process": ""[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "type": "library",[m
+[32m+[m[32m            "autoload": {[m
+[32m+[m[32m                "psr-4": {[m
+[32m+[m[32m                    "Symfony\\Component\\BrowserKit\\": ""[m
+[32m+[m[32m                },[m
+[32m+[m[32m                "exclude-from-classmap": [[m
+[32m+[m[32m                    "/Tests/"[m
+[32m+[m[32m                ][m
+[32m+[m[32m            },[m
+[32m+[m[32m            "notification-url": "https://packagist.org/downloads/",[m
+[32m+[m[32m            "license": [[m
+[32m+[m[32m                "MIT"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "authors": [[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "Fabien Potencier",[m
+[32m+[m[32m                    "email": "fabien@symfony.com"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "Symfony Community",[m
+[32m+[m[32m                    "homepage": "https://symfony.com/contributors"[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "description": "Simulates the behavior of a web browser, allowing you to make requests, click on links and submit forms programmatically",[m
+[32m+[m[32m            "homepage": "https://symfony.com",[m
+[32m+[m[32m            "support": {[m
+[32m+[m[32m                "source": "https://github.com/symfony/browser-kit/tree/v5.4.11"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "funding": [[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "url": "https://symfony.com/sponsor",[m
+[32m+[m[32m                    "type": "custom"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "url": "https://github.com/fabpot",[m
+[32m+[m[32m                    "type": "github"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",[m
+[32m+[m[32m                    "type": "tidelift"[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "time": "2022-07-27T15:50:05+00:00"[m
+[32m+[m[32m        },[m
+[32m+[m[32m        {[m
+[32m+[m[32m            "name": "symfony/css-selector",[m
+[32m+[m[32m            "version": "v5.4.11",[m
+[32m+[m[32m            "source": {[m
+[32m+[m[32m                "type": "git",[m
+[32m+[m[32m                "url": "https://github.com/symfony/css-selector.git",[m
+[32m+[m[32m                "reference": "c1681789f059ab756001052164726ae88512ae3d"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "dist": {[m
+[32m+[m[32m                "type": "zip",[m
+[32m+[m[32m                "url": "https://api.github.com/repos/symfony/css-selector/zipball/c1681789f059ab756001052164726ae88512ae3d",[m
+[32m+[m[32m                "reference": "c1681789f059ab756001052164726ae88512ae3d",[m
+[32m+[m[32m                "shasum": ""[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "require": {[m
+[32m+[m[32m                "php": ">=7.2.5",[m
+[32m+[m[32m                "symfony/polyfill-php80": "^1.16"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "type": "library",[m
+[32m+[m[32m            "autoload": {[m
+[32m+[m[32m                "psr-4": {[m
+[32m+[m[32m                    "Symfony\\Component\\CssSelector\\": ""[m
+[32m+[m[32m                },[m
+[32m+[m[32m                "exclude-from-classmap": [[m
+[32m+[m[32m                    "/Tests/"[m
+[32m+[m[32m                ][m
+[32m+[m[32m            },[m
+[32m+[m[32m            "notification-url": "https://packagist.org/downloads/",[m
+[32m+[m[32m            "license": [[m
+[32m+[m[32m                "MIT"[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "authors": [[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "Fabien Potencier",[m
+[32m+[m[32m                    "email": "fabien@symfony.com"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "Jean-François Simon",[m
+[32m+[m[32m                    "email": "jeanfrancois.simon@sensiolabs.com"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "name": "Symfony Community",[m
+[32m+[m[32m                    "homepage": "https://symfony.com/contributors"[m
+[32m+[m[32m                }[m
+[32m+[m[32m            ],[m
+[32m+[m[32m            "description": "Converts CSS selectors to XPath expressions",[m
+[32m+[m[32m            "homepage": "https://symfony.com",[m
+[32m+[m[32m            "support": {[m
+[32m+[m[32m                "source": "https://github.com/symfony/css-selector/tree/v5.4.11"[m
+[32m+[m[32m            },[m
+[32m+[m[32m            "funding": [[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "url": "https://symfony.com/sponsor",[m
+[32m+[m[32m                    "type": "custom"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "url": "https://github.com/fabpot",[m
+[32m+[m[32m                    "type": "github"[m
+[32m+[m[32m                },[m
+[32m+[m[32m                {[m
+[32m+[m[32m                    "url": "https://tidelift.com/funding/github/packagist/symfony/sy

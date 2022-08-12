@@ -1,4 +1,4 @@
-import { deleteBookmark } from "./Data";
+import { deleteBookmark, sendCategory } from "./Data";
 
 
 export function buildBookmarks(bookmarks) {
@@ -37,4 +37,26 @@ export function buildBookmarks(bookmarks) {
         deleteBookmark(id)
        })
     });
+}
+
+export function createCategory(categoriesData) {
+    const categories = document.querySelector('#categories');
+    categories.textContent = '';
+    categoriesData.map((categoryData) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.setAttribute('href', `/category/${categoryData.id_category}`);
+        a.textContent = categoryData.category_name;
+        li.appendChild(a);
+        categories.appendChild(li);
+    });
+}
+
+export  function storeCategory(e) {
+    e.preventDefault();
+    const categoryForm = document.getElementById('category-form');
+    const websiteCategory = document.querySelector('#website-category');
+    sendCategory(websiteCategory.value);
+    categoryForm.reset();
+    websiteCategory.focus()
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace BM\Core;
+namespace BM\Model;
 
 use PDO;
 

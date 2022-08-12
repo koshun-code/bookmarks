@@ -12,7 +12,7 @@ let bookmarks = [];
 
 function showModal() {
     modal.classList.add('show-modal');
-    websiteNameEl.focus();
+    websiteUrlEl.focus();
 }
 
 //Event listener to show 
@@ -125,29 +125,22 @@ const sendBookmark = async (bookmark) => {
     fetchBookmarks();
 }
 
-
-websiteUrlEl.onblur = async () => {
-/**
- *     const bookmark = {
-        name: nameValues,
-        url: nameUrl,
-    };
- */
-
-    const send = {url: websiteUrlEl.value};
-   // console.log(send);
-    const response = await fetch("http://bookmarks/api/bookmarks/title/", {
+websiteUrlEl.addEventListener('blur', () => {
+    const send = {url: websiteUrlEl.value}
+    
+     const respose = fetch('http://bookmarks/api/bookmarks/title/', {
         method: "POST",
         headers: {
             'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify(send)
+        mode: 'no-cors',
+        body: JSON.stringify(send),
+    }).then(response => {
+        return response.json()
+    }).then(data => data.title)
 
-    });
-    
-    const data = await response.json();
-    websiteNameEl.value = data.title;
-}
+    console.log(respose);
+})
 
 //Handel data from Form
 function storeBookmark(e) {
@@ -168,7 +161,7 @@ function storeBookmark(e) {
     sendBookmark(bookmark);
     //fetchBookmarks();
     bookmarkForm.reset();
-    websiteNameEl.focus();
+    websiteUrlEl.focus();
 
    // console.log(bookmarks);
 }
