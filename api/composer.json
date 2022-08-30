@@ -4,7 +4,8 @@
         "slim/psr7": "^1.5",
         "slim/http": "^1.2",
         "fabpot/goutte": "^4.0",
-        "simplehtmldom/simplehtmldom": "*"
+        "simplehtmldom/simplehtmldom": "*",
+        "php-di/slim-bridge": "^3.2"
     },
     "autoload": {
         "psr-4": {

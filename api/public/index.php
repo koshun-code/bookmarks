@@ -7,10 +7,13 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Routing\RouteCollectorProxy;
 use Slim\Routing\RouteContext;
 use BM\Core\BookmarkModel;
+use \DI\Bridge\Slim\Bridge; //\DI\Bridge\Slim\Bridge
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$app = AppFactory::create();
+
+//$app = AppFactory::create();
+$app = DI\Bridge\Slim\Bridge::create();
 
 // This middleware will append the response header Access-Control-Allow-Methods with all allowed methods
 $app->add(function (Request $request, RequestHandlerInterface $handler): Response {
@@ -43,7 +46,4 @@ $app->addErrorMiddleware(true, true, true);
 
 (require './../config/routes.php')($app);
 
-// $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
-//     throw new HttpNotFoundException($request);
-// });
 $app->run();

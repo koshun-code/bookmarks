@@ -3,6 +3,7 @@
 namespace BM\Model;
 
 use PDO;
+use PDOException;
 
 class DBConnect
 {
@@ -24,8 +25,12 @@ class DBConnect
             'password' => $password
         ] = $this->config;
     
-        $dsn = "{$driver}:host={$host};dbname={$dbname}";
-        $pdo = new PDO($dsn, $user, $password);
+        try {
+            $dsn = "{$driver}:host={$host};dbname={$dbname}";
+            $pdo = new PDO($dsn, $user, $password);
+        } catch( PDOException $e){
+            $e->getMessage();
+        }
         return $pdo;
     }
 }
