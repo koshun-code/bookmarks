@@ -4,6 +4,7 @@ namespace BM\Model;
 
 use BM\Model\DBConnect;
 use PDO;
+use PDOException;
 
 class Model {
     
@@ -40,9 +41,23 @@ class Model {
         $fields = join(', ', $fields);
         $plaseholders = join(', ', $plaseholders);
         $sql = "INSERT INTO {$table} ({$fields}) VALUES ({$plaseholders})";
-        $sth = $this->db->prepare($sql);
-        $sth->execute($data);
-
-        return $this->db->lastInsertId();
+        try {
+            $sth = $this->db->prepare($sql);
+            $sth->execute($data);
+            return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
+    }
+    public function isExist($table, $where, $item)
+    {
+        $sql = "SELECT {$where} FROM {$table} WHERE {$where} = ?";
+        try {
+            $sth = $this->db->prepare($sql);
+            $sth->execute([$item]);
+            return $sth->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return $e->getMessage();
+        }
     }
 }

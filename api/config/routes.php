@@ -1,6 +1,7 @@
 <?php
 
 use BM\Controllers\BookmarkController;
+use BM\Controllers\CategoryController;
 use BM\Model\BookmarkModel;
 use BM\Model\CategoryModel;
 use BM\Services\CheckService;
@@ -28,25 +29,9 @@ return function (App $app) {
      * This routes work with category
      */
     $app->group('/api/category', function(RouteCollectorProxy $group){
-        $group->get('/give', function(Request $request, Response $response, $args) {
-            ////
-            $category = new CategoryModel();
-            $categoris = $category->getALL("category");
-            if ($categoris) {
-                return $response->withJson($categoris);
-            }
-            return $response->withJson('Category not exist');
-        });
-        $group->post('/send', function(Request $request, Response $response, $args) {
-            $category = new CategoryModel();
-            ['category_name' => $categoryName] = $request->getParsedBody();
-           // return $response->withJson();
-            $insert = $category->insert(['category_name' => $categoryName], ['category_name'], [":category_name"], 'category');
-            if ($insert) {
-                return $response->withJson($insert);
-            }
-            return $response->withJson('cant insert data');
-        });
+        $group->get('/give', [CategoryController::class, 'index']);
+        $group->post('/send', [CategoryController::class, 'store']);
+        $group->get('/{id}/bookmarks', [CategoryController::class, 'categoryBookmark']);
     });
 };
 

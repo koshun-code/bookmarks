@@ -9,18 +9,11 @@ use Slim\Http\Response as Response;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
-class BookmarkController
+class BookmarkController extends Controller
 {
-    private ContainerInterface $container;
 
-    public function __construct(ContainerInterface $container)
+    public function index(Request $request, Response $response, BookmarkModel $bookmarks):Response
     {
-        $this->container = $container;
-    }
-
-    public function index(Request $request, Response $response):Response
-    {
-        $bookmarks = new BookmarkModel();
         $res = $bookmarks->getALL();
         if ($res) {
             return $response->withJson($res);
@@ -29,20 +22,31 @@ class BookmarkController
         }
     }
 
-    public function show(int $id, Request $request, Response $response): Response
+    public function show(int $id, Request $request, Response $response, BookmarkModel $bookmarks): Response
     {
-        $bookmarks = new BookmarkModel();
         return $response->withJson($bookmarks->getOne($id));
     }
 
-    public function store(Request $request, Response $response)
+    public function store(Request $request, Response $response, BookmarkModel $bookmarks)
     {
         $req = $request->getParsedBody();
+
+        $validate = $this->validator->validate($req, [
+            'name' => 'required|min:2',
+            'url' => 'required|url',
+            'category_id' => 'numeric'
+        ]);
+        if ($validate->fails()) {
+            $errors = $validate->errors();
+            return $response->withJson($errors->firstOfAll());
+        }
+        if ($bookmarks->isExist('bookmarks', 'url', $req['url'])) {
+            return $response->withJson('Такая ссылка уже существует');
+        }
+
         $status = new CheckService($req['url']);
         $statusCode = $status->checkUrl();
-        $bookmarks = new BookmarkModel();
         $bookmarkInfo = $statusCode ? [...$req, 'status' => $statusCode] : [...$req, null];
-        //var_dump($bookmarkInfo);
         
         $res = $bookmarks->insert($bookmarkInfo, ['name', 'url', 'status', 'category_id'], [":name", ":url", ":status", ":category_id"]);
     
@@ -53,11 +57,9 @@ class BookmarkController
         }
     }
 
-    public function delete(int $id, Request $request, Response $response)
+    public function delete(int $id, Request $request, Response $response, BookmarkModel $bookmarks)
     {
-        $bookmarks = new BookmarkModel();
-        $res = $bookmarks->delete($id);
-        if ($res) {
+        if ($bookmarks->delete($id)) {
             return $response->withJson("Bookmark with id {$id} successfully deleted");
         } else {
             return $response->withJson("Error", 404);
@@ -67,9 +69,9 @@ class BookmarkController
     public function title(Request $request, Response $response)
     {
         $client = new Client();
-        $url = $request->getParsedBody();
+        ['url' => $url] = $request->getParsedBody();
         if ($url) {
-            $crawler = $client->request('GET', $url['url']);
+            $crawler = $client->request('GET', $url);
             $title = $crawler->filter('title')->text();
             return $response->withJson(['title' => $title]);
         }
