@@ -6,7 +6,6 @@ use Goutte\Client;
 use BM\Model\BookmarkModel;
 use BM\Services\CheckService;
 use Slim\Http\Response as Response; 
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 class BookmarkController extends Controller

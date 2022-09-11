@@ -40,16 +40,26 @@ export function buildBookmarks(bookmarks) {
 }
 
 export function createCategory(categoriesData) {
-    const categories = document.querySelector('#categories');
+    const categories = document.querySelector('#categories');//categories
     categories.textContent = '';
     categoriesData.map((categoryData) => {
         const li = document.createElement('li');
         const a = document.createElement('a');
-        a.setAttribute('href', `/category/${categoryData.id_category}`);
+        a.setAttribute('href', `http://bookmarks/category/${categoryData.id_category}`);
         a.textContent = categoryData.category_name;
         li.appendChild(a);
         categories.appendChild(li);
     });
+}
+
+export function createSelectCategory(data) {
+    const select = document.querySelector('.form-select');
+    data.map(item => {
+        const option = document.createElement('option');
+        option.setAttribute("value", item.id_category);
+        option.textContent = item.category_name;
+        select.appendChild(option);
+    })
 }
 
 export  function storeCategory(e) {

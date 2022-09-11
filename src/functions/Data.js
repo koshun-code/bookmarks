@@ -1,4 +1,4 @@
-import { buildBookmarks, createCategory } from "./Build";
+import { buildBookmarks, createCategory, createSelectCategory } from "./Build";
 import { chechUrlScheme, validate } from "./Validate";
 import axios from "axios";
 
@@ -65,6 +65,8 @@ export function storeBookmark(e) {
     e.preventDefault();
     const nameValues = websiteNameEl.value;
     let nameUrl = websiteUrlEl.value;
+    const select = document.querySelector('.form-select');
+    const category_id = select.options[select.selectedIndex].value;
 
     nameUrl = chechUrlScheme(nameUrl);
 
@@ -75,6 +77,7 @@ export function storeBookmark(e) {
     const bookmark = {
         name: nameValues,
         url: nameUrl,
+        category_id: category_id
     };
     sendBookmark(bookmark);
     //fetchBookmarks();
@@ -87,6 +90,7 @@ export async function giveCategory() {
     const response = await axios.get('http://bookmarks/api/category/give');
     const data = await response.data;
     createCategory(data);
+    createSelectCategory(data);
 }
 
 export async function sendCategory(dataCategory) {

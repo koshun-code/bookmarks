@@ -13,6 +13,7 @@ const modalCategoryShow = document.getElementById('modal-category-show');
 const modalCategory = document.getElementById('modal-category');
 const closeModalCategory = document.getElementById('close-modal-category');
 const categoryForm = document.getElementById('category-form');
+const forSelect = document.querySelector('.form-select');
 
 let bookmarks = [];
 

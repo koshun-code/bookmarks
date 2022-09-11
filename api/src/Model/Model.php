@@ -29,14 +29,23 @@ class Model {
         return $sth->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function delete($id, $table = 'bookmarks')
+    public function find(array $data, array $param, string $where, string $table)
+    {
+        $param = join(', ', $param);
+        $sql = "SELECT {$param} FROM {$table} WHERE {$where} = ?";
+        $sth = $this->db->prepare($sql);
+        $sth->execute($data);
+        return $sth->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function delete(int $id, string $table = 'bookmarks')
     {
         $sql = "DELETE FROM {$table} WHERE id = ?";
         $sth = $this->db->prepare($sql);
         return $sth->execute([$id]);
     }
 
-    public function insert($data, $fields, $plaseholders, $table = 'bookmarks')
+    public function insert(array $data, array $fields, array $plaseholders, string $table = 'bookmarks'): int | string
     { 
         $fields = join(', ', $fields);
         $plaseholders = join(', ', $plaseholders);
@@ -52,12 +61,9 @@ class Model {
     public function isExist($table, $where, $item)
     {
         $sql = "SELECT {$where} FROM {$table} WHERE {$where} = ?";
-        try {
-            $sth = $this->db->prepare($sql);
-            $sth->execute([$item]);
-            return $sth->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return $e->getMessage();
-        }
+        $sth = $this->db->prepare($sql);
+        $sth->execute([$item]);
+        return $sth->rowCount() > 0;
+
     }
 }

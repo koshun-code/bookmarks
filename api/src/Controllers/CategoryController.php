@@ -5,9 +5,7 @@ namespace BM\Controllers;
 use BM\Model\CategoryModel;
 use BM\Controllers\Controller;
 use Slim\Http\Response as Response; 
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Rakit\Validation\Validator;
 
 class CategoryController extends Controller
 {
@@ -27,6 +25,7 @@ class CategoryController extends Controller
         ]);
 
         if (!$validation->fails()) {
+
             $exist = $category->isExist('category', 'category_name', $request->getParsedBody()['category_name']);
 
             if ($exist) {
@@ -43,6 +42,9 @@ class CategoryController extends Controller
     
     public function categoryBookmark(int $id, Request $request, Response $response, CategoryModel $category)
     {
-        return $response->withJson($category->getBookmarksByCategory($id));
+        if (isset($id) && !empty($id)) {
+            return $response->withJson($category->getBookmarksByCategory($id));
+        }
+        return $response->withJson('id - должен быть числом');
     }
 }

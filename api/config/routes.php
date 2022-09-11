@@ -2,13 +2,11 @@
 
 use BM\Controllers\BookmarkController;
 use BM\Controllers\CategoryController;
-use BM\Model\BookmarkModel;
-use BM\Model\CategoryModel;
-use BM\Services\CheckService;
-use Slim\Http\Response as Response; 
-use Psr\Http\Message\ServerRequestInterface as Request;
+use BM\Controllers\LoginController;
+use BM\Controllers\LogoutController;
+use BM\Controllers\RegisterController;
+use BM\Controllers\UserController;
 use Slim\App;
-use Goutte\Client;
 use Slim\Routing\RouteCollectorProxy;
 
 /**
@@ -32,6 +30,14 @@ return function (App $app) {
         $group->get('/give', [CategoryController::class, 'index']);
         $group->post('/send', [CategoryController::class, 'store']);
         $group->get('/{id}/bookmarks', [CategoryController::class, 'categoryBookmark']);
+    });
+    /**
+     * Routes for login, logout, registration
+     */
+    $app->group('/api/user', function(RouteCollectorProxy $group) {
+        $group->post('/login', [LoginController::class, 'login']);
+        $group->post('/logout', [LogoutController::class, 'logout']);
+        $group->post('/register', [RegisterController::class, 'register']);
     });
 };
 
