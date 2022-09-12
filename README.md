@@ -24,4 +24,4 @@ Automatic substitution of the title as the name of the bookmark
 4. Кратное описание если необходимо+
 5. Сокращённая ссылка
 6. Списки ссылок(Категории)+
-7. Переписать всё на React
+7. Переписать весь фронт на React
