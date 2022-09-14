@@ -34,7 +34,7 @@ class RegisterController extends Controller
                 return $response->withJson(['message' => 'Не удалось зарегистрировать. Проверте данные'], 203);
             }
         } else {
-            return $response->withJson(['message' => $valid->errors()], 204);
+            return $response->withJson(['message' => $valid->getInvalidData()], 204);
         }
     }
 }

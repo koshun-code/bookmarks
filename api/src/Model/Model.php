@@ -2,7 +2,9 @@
 
 namespace BM\Model;
 
+use BM\Exceptions\DeleteException;
 use BM\Model\DBConnect;
+use Exception;
 use PDO;
 use PDOException;
 
@@ -42,13 +44,20 @@ class Model {
     {
         $sql = "DELETE FROM {$table} WHERE id = ?";
         $sth = $this->db->prepare($sql);
-        return $sth->execute([$id]);
+        $deleted = $sth->execute([$id]);
+        if ($deleted) {
+            return true;
+        } else {
+            throw new DeleteException('Невозможно удалить');
+        }
     }
 
-    public function insert(array $data, array $fields, array $plaseholders, string $table = 'bookmarks'): int | string
+    public function insert(array $data, array $fields, string $table = 'bookmarks'): int | string
     { 
+        $plaseholders = array_map(fn($plaseholder) => ":{$plaseholder}", $fields);
         $fields = join(', ', $fields);
         $plaseholders = join(', ', $plaseholders);
+        
         $sql = "INSERT INTO {$table} ({$fields}) VALUES ({$plaseholders})";
         try {
             $sth = $this->db->prepare($sql);

@@ -2,6 +2,7 @@
 
 namespace BM\Controllers;
 
+use BM\Exceptions\DeleteException;
 use Goutte\Client;
 use BM\Model\BookmarkModel;
 use BM\Services\CheckService;
@@ -47,7 +48,7 @@ class BookmarkController extends Controller
         $statusCode = $status->checkUrl();
         $bookmarkInfo = $statusCode ? [...$req, 'status' => $statusCode] : [...$req, null];
         
-        $res = $bookmarks->insert($bookmarkInfo, ['name', 'url', 'status', 'category_id'], [":name", ":url", ":status", ":category_id"]);
+        $res = $bookmarks->insert($bookmarkInfo, ['name', 'url', 'status', 'category_id']);
     
         if ($res) {
             return $response->withJson("Success");
@@ -58,22 +59,28 @@ class BookmarkController extends Controller
 
     public function delete(int $id, Request $request, Response $response, BookmarkModel $bookmarks)
     {
-        if ($bookmarks->delete($id)) {
-            return $response->withJson("Bookmark with id {$id} successfully deleted");
-        } else {
-            return $response->withJson("Error", 404);
+        if (isset($id) && ! empty($id) && is_int($id)) {
+            try {
+                $bookmarks->delete($id);          
+                return $response->withJson(['message' => "Bookmark with id {$id} successfully deleted"]);
+            } catch (DeleteException $e) {
+                return $response->withJson(['message' => $e->getMessage()], 404);
+            }
         }
     }
 
     public function title(Request $request, Response $response)
     {
-        $client = new Client();
-        ['url' => $url] = $request->getParsedBody();
-        if ($url) {
+         $url = $request->getParsedBody()['url'];
+         $client = new Client();
+        if ( ! empty ($url)) {
             $crawler = $client->request('GET', $url);
             $title = $crawler->filter('title')->text();
-            return $response->withJson(['title' => $title]);
-        }
-        return $response->withJson('None');
+            if (! empty($title)) {
+                return $response->withJson(['title' => $title]);
+            } else {
+                return $response->withJson(['title' => 'None']);
+            }
+        } 
     }
 }

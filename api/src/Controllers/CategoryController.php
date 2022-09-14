@@ -32,7 +32,7 @@ class CategoryController extends Controller
                 return $response->withJson(['error' => 'Такая категория уже существует']);
             }
 
-            $insert = $category->insert($request->getParsedBody(), ['category_name'], [":category_name"], 'category');
+            $insert = $category->insert($request->getParsedBody(), ['category_name'], 'category');
             return $response->withJson($insert);
         } else {
             $errors = $validation->errors();

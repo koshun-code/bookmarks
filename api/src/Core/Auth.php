@@ -7,7 +7,13 @@ use BM\Core\Password;
 
 class Auth extends UserModel
 {
-    public function login(string $username, string $password)
+    /**
+     * $username : string
+     * $password : string
+     * return bool
+     * This method take a user password from DB
+     */
+    public function login(string $username, string $password): bool
     {
         $passwordHash = $this->find([$username], ['password'], 'name', 'users'); //
 
@@ -19,20 +25,19 @@ class Auth extends UserModel
         }
         return false;
     }
-    public function register(array $user)
+    public function register(array $user) : bool
     {
         $user = [...$user, 'password' => Password::makeHash($user['password'])];
         
-        $id = $this->insert($user, ['name', 'email', 'password'], [':name', ':email', ':password'], 'users');
+        $id = $this->insert($user, ['name', 'email', 'password'], 'users');
         if ($id) {
             return true;
         }
         return false;
     }
-    public function logout()
+    public function logout(): bool
     {
         session_start();
-        //return $_SESSION['username'];
         if (!empty($_SESSION['username']) && !empty($_COOKIE['username'])) {
             session_destroy();
             setcookie('username', '', time() - 3600);
