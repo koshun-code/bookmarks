@@ -3,6 +3,10 @@
 namespace BM\Model;
 
 use BM\Exceptions\DeleteException;
+use BM\Exceptions\ExistException;
+use BM\Exceptions\FindException;
+use BM\Exceptions\GetException;
+use BM\Exceptions\InsertException;
 use BM\Model\DBConnect;
 use Exception;
 use PDO;
@@ -20,15 +24,24 @@ class Model {
     public function getALL($table = 'bookmarks')
     {
         $sth = $this->db->prepare("SELECT * FROM {$table}");
-        $sth->execute();
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        
+        $execute = $sth->execute(); 
+        if ($execute) {
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            throw new GetException('Не могу получить данные от сервера');
+        }
     }
 
     public function getOne($id, $table = 'bookmarks')
     {
         $sth = $this->db->prepare("SELECT * FROM {$table} WHERE id = ?");
-        $sth->execute([$id]);
-        return $sth->fetch(PDO::FETCH_ASSOC);
+        $execute = $sth->execute([$id]);
+        if ($execute) {
+            return $sth->fetch(PDO::FETCH_ASSOC);
+        } else {
+            throw new GetException('Не могу получить данные от сервера');
+        }
     }
 
     public function find(array $data, array $param, string $where, string $table)
@@ -36,8 +49,12 @@ class Model {
         $param = join(', ', $param);
         $sql = "SELECT {$param} FROM {$table} WHERE {$where} = ?";
         $sth = $this->db->prepare($sql);
-        $sth->execute($data);
-        return $sth->fetch(PDO::FETCH_ASSOC);
+        $execute = $sth->execute($data);
+        if ($execute) {
+            return $sth->fetch(PDO::FETCH_ASSOC);
+        } else {
+            throw new FindException('Невозможно найти запрашиваемые данные');
+        }
     }
 
     public function delete(int $id, string $table = 'bookmarks')
@@ -59,20 +76,23 @@ class Model {
         $plaseholders = join(', ', $plaseholders);
         
         $sql = "INSERT INTO {$table} ({$fields}) VALUES ({$plaseholders})";
-        try {
             $sth = $this->db->prepare($sql);
-            $sth->execute($data);
-            return $this->db->lastInsertId();
-        } catch (PDOException $e) {
-            return $e->getMessage();
-        }
+            $insert = $sth->execute($data);
+            if ($insert) {
+                return $this->db->lastInsertId();
+            } else {
+                throw new InsertException('Невозможно внести данные. Проверти их корректность');
+            }
     }
     public function isExist($table, $where, $item)
     {
         $sql = "SELECT {$where} FROM {$table} WHERE {$where} = ?";
         $sth = $this->db->prepare($sql);
-        $sth->execute([$item]);
-        return $sth->rowCount() > 0;
-
+        $exist = $sth->execute([$item]);
+        if ($exist) {
+            return $sth->rowCount() > 0;
+        } else {
+            throw new ExistException('Невожможно выполнить запрос');
+        }
     }
 }
