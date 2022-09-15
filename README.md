@@ -1,3 +1,5 @@
+<a href="https://codeclimate.com/github/koshun-code/bookmarks/maintainability"><img src="https://api.codeclimate.com/v1/badges/93be666678d8167fe72c/maintainability" /></a>
+
 # bookmarks
 This is a MVP for bookmark store. Simple api and simple functionnality
 To see how it's work [Bookmarks keeper](http://brown-fox.ru/). 
